@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоды</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+
+
+    <!-- Контейнер для карточек -->
+    <div class="weather-container" id="weatherContainer">
+        <div class="card">
+            <h3>Алматы</h3>
+            <img id="weatherIcon1" class="weather-icon" src="" alt="Погода">
+            <p id="weatherDescription1"></p>
+            <p id="temp1"></p>
+            <button onclick="showWeather('Almaty', 1)">Подробнее</button>
+        </div>
+        <div class="card">
+            <h3>Астана</h3>
+            <img id="weatherIcon2" class="weather-icon" src="" alt="Погода">
+            <p id="weatherDescription2"></p>
+            <p id="temp2"></p>
+            <button onclick="showWeather('Astana', 2)">Подробнее</button>
+        </div>
+        <div class="card">
+            <h3>Алатау</h3>
+            <img id="weatherIcon3" class="weather-icon" src="" alt="Погода">
+            <p id="weatherDescription3"></p>
+            <p id="temp3"></p>
+            <button onclick="showWeather('Alatau', 3)">Подробнее</button>
+        </div>
+        <div class="card">
+            <h3>Шымкент</h3>
+            <img id="weatherIcon4" class="weather-icon" src="" alt="Погода">
+            <p id="weatherDescription4"></p>
+            <p id="temp4"></p>
+            <button onclick="showWeather('Shymkent', 4)">Подробнее</button>
+        </div>
+        <div class="card">
+            <h3>Талдыкорган</h3>
+            <img id="weatherIcon5" class="weather-icon" src="" alt="Погода">
+            <p id="weatherDescription5"></p>
+            <p id="temp5"></p>
+            <button onclick="showWeather('Taldykorgan', 5)">Подробнее</button>
+        </div>
+        <div class="card">
+            <h3>Усть-Каменогорск</h3>
+            <img id="weatherIcon6" class="weather-icon" src="" alt="Погода">
+            <p id="weatherDescription6"></p>
+            <p id="temp6"></p>
+            <button onclick="showWeather('Ust-Kamenogorsk', 6)">Подробнее</button>
+        </div>
+        <div class="card">
+            <h3>Костанай</h3>
+            <img id="weatherIcon7" class="weather-icon" src="" alt="Погода">
+            <p id="weatherDescription7"></p>
+            <p id="temp7"></p>
+            <button onclick="showWeather('Kostanay', 7)">Подробнее</button>
+        </div>
+        <div class="card">
+            <h3>Петропавлоск</h3>
+            <img id="weatherIcon8" class="weather-icon" src="" alt="Погода">
+            <p id="weatherDescription8"></p>
+            <p id="temp8"></p>
+            <button onclick="showWeather('Petropavlovsk', 8)">Подробнее</button>
+        </div>
+        <div class="card">
+            <h3>Актобе</h3>
+            <img id="weatherIcon9" class="weather-icon" src="" alt="Погода">
+            <p id="weatherDescription9"></p>
+            <p id="temp9"></p>
+            <button onclick="showWeather('Aktobe', 9)">Подробнее</button>
+        </div>
+        <div class="card">
+            <h3>Петропавлоск</h3>
+            <img id="weatherIcon10" class="weather-icon" src="" alt="Погода">
+            <p id="weatherDescription10"></p>
+            <p id="temp10"></p>
+            <button onclick="showWeather('Karaganda', 10)">Подробнее</button>
+        </div>
+        <div class="card">
+            <h3>Туркестан</h3>
+            <img id="weatherIcon11" class="weather-icon" src="" alt="Погода">
+            <p id="weatherDescription11"></p>
+            <p id="temp11"></p>
+            <button onclick="showWeather('Turkestan', 11)">Подробнее</button>
+        </div>
+        <div class="card">
+            <h3>Темиртау</h3>
+            <img id="weatherIcon12" class="weather-icon" src="" alt="Погода">
+            <p id="weatherDescription12"></p>
+            <p id="temp12"></p>
+            <button onclick="showWeather('Temirtau', 12)">Подробнее</button>
+        </div>
+        
+        <div class="card">
+            <h3>Талдыкорган</h3>
+            <img id="weatherIcon5" class="weather-icon" src="" alt="Погода">
+            <p id="weatherDescription5"></p>
+            <p id="temp5"></p>
+            <button onclick="showWeather('Taldykorgan', 5)">Подробнее</button>
+        </div>
+    </div>
+    
+
+    <div id="modal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()" aria-label="Закрыть модальное окно">&times;</span>
+            <h2 id="modalCity">Город</h2>
+            <div class="weather-info">
+                <img id="modalIcon" src="" alt="Иконка погоды" class="weather-icon">
+                <p id="modalDescription" class="modal-text">Описание погоды</p>
+            </div>
+            <div class="weather-details">
+                <p id="modalHumidity" class="weather-param">Влажность: 0%</p>
+                <p id="modalWind" class="weather-param">Ветер: 0 м/с</p>
+                <p id="modalPressure" class="weather-param">Давление: 0 мм рт. ст.</p>
+            </div>
+            <canvas id="weatherGraph"></canvas>
+        </div>
+    </div>
+
+    <!-- Кнопка смены темы -->
+<button id="themeToggle" class="theme-toggle-btn">Настройки фона</button>
+
+<!-- Модальное окно для выбора фона -->
+<div id="themeModal" class="theme-modal">
+    <div class="theme-modal-content">
+        <span class="close" onclick="closeThemeModal()">&times;</span>
+        <h2>Выберите фон</h2>
+        <div class="theme-options">
+            <img src="image/phon1.jpeg" alt="Фон 1" onclick="changeBackground('image/phon1.jpeg')">
+            <img src="image/phon2.jpeg" alt="Фон 2" onclick="changeBackground('image/phon2.jpeg')">
+            <img src="image/phon3.jpg" alt="Фон 3" onclick="changeBackground('image/phon3.jpg')">
+        </div>
+    </div>
+</div>
+
+<div id="time" class="time"></div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>

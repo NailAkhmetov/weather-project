@@ -1,0 +1,344 @@
+/* Весь фон страницы */
+body {
+    background-image: url('https://img1.akspic.ru/originals/0/4/6/5/0/105640-priroda-zima-windows_8-zelenyj-windows_10-1920x1080.jpg'); /* Путь к изображению фона */
+    background-size: cover; /* Фон на всю страницу */
+    background-position: center; /* Центрируем фон */
+    background-attachment: fixed; /* Фиксируем фон при прокрутке */
+    margin: 0;
+    font-family: 'Arial', sans-serif; /* Используем простой шрифт */
+    color: white; /* Белый цвет текста для контраста */
+}
+
+/* Контейнер для карточек */
+.weather-container {
+    display: flex; /* Flexbox для карточек */
+    gap: 20px; /* Расстояние между карточками */
+    padding: 20px;
+    overflow-x: auto; /* Горизонтальная прокрутка */
+    scroll-behavior: smooth; /* Плавный скролл */
+    white-space: nowrap; /* Предотвращает перенос карточек вниз */
+    position: relative;
+    z-index: 1; /* Чтобы контейнер был поверх фона */
+    overflow-x: auto; /* Горизонтальная прокрутка при необходимости */
+
+}
+
+/* Стиль для карточек */
+.card {
+    background: rgba(0, 0, 0, 0.6); /* Полупрозрачный фон */
+    flex: 0 0 auto; /* Карточки не сжимаются */
+    padding: 15px;
+    border-radius: 10px; /* Скругленные углы */
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавные переходы */
+    width: 180px; /* Увеличиваем ширину карточки */
+    min-width: 180px; /* Минимальная ширина */
+    height: 250px; /* Фиксированная высота */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Тень для карточек */
+    scroll-snap-align: start; /* Захватывает прокрутку на элемент */
+}
+/* Стиль для скрытых карточек */
+.card.hidden {
+    transform: translateX(400px); /* Двигаем карточку вправо на 400px */
+    opacity: 0; /* Скрываем карточку */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Плавное исчезновение */
+}
+
+
+
+
+.weather-container::-webkit-scrollbar {
+    display: none; /* Убирает стандартный скроллбар */
+}
+
+
+.card:hover {
+    transform: scale(1.05); /* Легкое увеличение карточки */
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.4); /* Увеличиваем тень */
+}
+
+/* Иконки погоды */
+.weather-icon {
+    width: 60px;
+    height: 60px;
+}
+
+/* Модальное окно */
+.modal {
+    display: none; /* Скрываем по умолчанию */
+    position: fixed;
+    z-index: 1; /* Модальное окно поверх всего */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Темный фон */
+    overflow-y: auto;
+    animation: fadeIn 0.3s ease-in-out; /* Плавное появление */
+}
+
+/* Плавное появление модального окна */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 15px;
+    width: 80%;
+    max-width: 600px;
+    color: black;
+    text-align: center;
+    position: relative;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Кнопка "Подробнее" */
+button {
+    background-color: #4CAF50; /* Зеленый фон */
+    color: white; /* Белый текст */
+    border: none; /* Без границы */
+    padding: 10px 20px; /* Внутренние отступы */
+    text-align: center; /* Центрируем текст */
+    text-decoration: none; /* Без подчеркивания */
+    display: inline-block; /* Блочный элемент */
+    font-size: 16px; /* Размер шрифта */
+    border-radius: 5px; /* Скругленные углы */
+    cursor: pointer; /* Курсор в виде руки */
+    transition: background-color 0.3s, transform 0.3s ease; /* Плавные переходы */
+}
+
+/* Эффект при наведении */
+button:hover {
+    background-color: #45a049; /* Темно-зеленый при наведении */
+    transform: scale(1.05); /* Увеличиваем кнопку при наведении */
+}
+
+/* Эффект при нажатии */
+button:active {
+    background-color: #3e8e41; /* Еще темнее зеленый при нажатии */
+    transform: scale(1); /* Возвращаем нормальный размер при нажатии */
+}
+
+/* Эффект фокуса */
+button:focus {
+    outline: none; /* Убираем контур */
+    box-shadow: 0 0 10px rgba(72, 179, 85, 0.5); /* Легкая тень при фокусе */
+}
+
+
+/* Контейнер для иконки и текста */
+.weather-info {
+    display: flex;
+    flex-direction: column; /* Вертикальное выравнивание */
+    align-items: center; /* Центрируем содержимое по горизонтали */
+    justify-content: center; /* Центрируем по вертикали */
+    margin-bottom: 20px;
+}
+
+/* Иконки погоды */
+.weather-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px; /* Расстояние между иконкой и текстом */
+}
+
+/* Текст погоды */
+.modal-text {
+    font-size: 20px;
+    margin: 0;
+    font-weight: bold; /* Жирное начертание для выделения текста */
+}
+
+/* Стиль для кнопки закрытия */
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    cursor: pointer;
+}
+
+p {
+    font-size: 18px; /* Увеличиваем шрифт */
+    margin: 8px 0;
+    text-align: left; /* Выровнять текст по левому краю */
+}
+
+/* График погоды */
+#weatherGraph {
+    max-width: 100%;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+
+/* Кнопка для смены фона */
+.theme-toggle-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    background-color: rgba(11, 116, 53, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    z-index: 2;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* Модальное окно */
+.theme-modal {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    overflow-y: auto;
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Анимация плавного появления модального окна */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Содержимое модального окна */
+.theme-modal-content {
+    background-color: #2e2e2e;
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 15px;
+    width: 80%;
+    max-width: 450px;
+    text-align: center;
+    transform: translateY(-50px);
+    animation: slideIn 0.5s ease-out forwards;
+}
+
+/* Анимация плавного подъема содержимого */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Заголовок в модальном окне */
+.theme-modal-content h2 {
+    color: white;
+    font-size: 22px;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Изображения для выбора фона */
+.theme-options {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.theme-options img {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.theme-options img:hover {
+    transform: scale(1.1); /* Увеличиваем изображение при наведении */
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+/* Кнопка закрытия */
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close:hover,
+.close:focus {
+    color: white;
+}
+
+
+.time {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    color: rgb(212, 204, 204);
+    font-size: 180px;
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    border-radius: 15px;
+    width: 450px;
+    text-align: center;
+    opacity: 0;  /* Начинаем с невидимого элемента */
+    animation: fadeIn 5s ease-out forwards;  /* Анимация появления */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.weather-card {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+}
+
